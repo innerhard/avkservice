@@ -27,5 +27,5 @@ jobs:
       - run: npm install
       - run: npm run build
       # Deploy
-      - run: cd public && rsync -rv -e "ssh -o StrictHostKeyChecking=no" --archive --compress --delete . www_prod@${{ secrets.IP }}:/home/www_prod/frontend/
+      - run: rsync -rv -e "ssh -o StrictHostKeyChecking=no" --archive --compress --delete . www_prod@${{ secrets.IP }}:/home/www_prod/frontend/
       - run: ssh www_prod@${{ secrets.IP }} "pm2 restart frontend_prod" 
