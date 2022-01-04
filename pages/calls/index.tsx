@@ -28,6 +28,7 @@ const Calls: NextPage = () => {
     const [password, setPassword] = useState('')
     const [showPassword, setShowPassword] = useState(false)
     const [cookies, setCookie] = useCookies(['avkcall'])
+
     const handleAuth = () =>
         getAuth(login, password)
             .then(data => {
