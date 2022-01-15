@@ -28,6 +28,7 @@ jobs:
       - run: npm run build
       # Change deploy port
       - run: sed -i 's/8000/9000/g' package.json
+      - run: sed -i 's/frontend_dev/frontend_prod/g' ecosystem.config.js
       # Deploy
       - run: rsync -rv -e "ssh -o StrictHostKeyChecking=no" --archive --compress --delete . www_prod@${{ secrets.IP }}:/home/www_prod/frontend/
       - run: ssh www_prod@${{ secrets.IP }} "pm2 restart frontend_prod" 
