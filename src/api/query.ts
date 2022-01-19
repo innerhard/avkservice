@@ -12,6 +12,7 @@ export const getAuth = (login: string, password: string) => axios.post('http://d
 
 export const getCategories = () => axios.get('http://dev.avksrv.ru/category-services')
 export const getPhones = () => axios.get('http://dev.avksrv.ru/callphones')
+export const getStocks = () => axios.get('http://dev.avksrv.ru/all-stocks/')
 export const putPhones = (id: string | number, data: any) => axios.put(`http://dev.avksrv.ru/callphones/${id}`, data)
 
 export const queryAPI = (
