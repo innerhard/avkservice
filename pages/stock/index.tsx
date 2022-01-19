@@ -2,17 +2,19 @@ import type { NextPage } from 'next'
 
 import { LayoutPage, Text } from '@components'
 import styled from 'styled-components'
-import { Arrow } from '../../src'
+import { Arrow, theme } from '../../src'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { getStocks } from '../../src/api/query'
 import { Typography } from '@mui/material'
+import { orderBy } from 'lodash'
 
 const Stock: NextPage = () => {
-    const [data, setData] = useState([])
+    const [data, setData] = useState<Array<{ title: string; description: string; expiration: string; image: any }>>([])
     useEffect(() => {
         getStocks().then(data => {
-            setData(data?.data)
+            const result = orderBy(data?.data, 'priority')
+            setData(result)
         })
     }, [])
     return (
@@ -27,14 +29,14 @@ const Stock: NextPage = () => {
                     </a>
                 </Link>
                 {data?.map(({ title, description, expiration, image }) => (
-                    <WrapperBlock>
+                    <WrapperBlock key={title}>
                         <Typography variant="h5" gutterBottom component="div">
                             {title}
                         </Typography>
                         <div>{description}</div>
                         {image?.url && (
                             <div>
-                                <img src={image?.url} alt={image?.name} />
+                                <CustomImage src={image?.name} alt={image?.name} />
                             </div>
                         )}
                         <div>Окончание акции {expiration}</div>
@@ -51,15 +53,22 @@ const WrapperAddress = styled.div`
     grid-row-gap: 16px;
     grid-template-rows: min-content;
 `
+const CustomImage = styled.img`
+    width: 100%;
+
+    @media (min-width: ${theme.breakpoint.mobileMd}px) {
+        width: 320px;
+    }
+`
 const WrapperBlock = styled.div`
     display: grid;
     height: fit-content;
     grid-template-rows: min-content min-content min-content min-content;
-    box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
-        rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
     grid-row-gap: 16px;
     border-radius: 20px;
-    padding: 16px;
+    padding: 24px;
+    background: #eaeaea;
 `
 const WrapperLinkHome = styled.div`
     display: grid;
