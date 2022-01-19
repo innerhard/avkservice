@@ -52,7 +52,14 @@ const Calls: NextPage = () => {
     const columns: GridColDef[] = [
         { field: 'id', headerName: 'ID', width: 70 },
         { field: 'lastName', headerName: 'Имя', width: 130 },
-        { field: 'phoneNumber', headerName: 'Номер телефона', width: 200 },
+        {
+            field: 'phoneNumber',
+            headerName: 'Номер телефона',
+            width: 200,
+            renderCell: params => {
+                return <a href={`tel: ${params?.value?.replace(/\s/g, '')}`}>{params?.value}</a>
+            },
+        },
         { field: 'call', headerName: 'Статус', width: 130 },
         { field: 'street', headerName: 'Запись', width: 130 },
         {
