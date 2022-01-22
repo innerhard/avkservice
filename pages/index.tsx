@@ -3,8 +3,18 @@ import { Banner, CameraView, Cards, LayoutPage, Stock } from '@components'
 import { theme } from '../src'
 import Head from 'next/head'
 import Script from 'next/script'
+import { useEffect, useState } from 'react'
+import { getStocks } from '../src/api/query'
+import { orderBy } from 'lodash'
 
 const Home: NextPage = () => {
+    const [data, setData] = useState([])
+    useEffect(() => {
+        getStocks().then(data => {
+            setData(data?.data)
+        })
+    }, [])
+    const filter = orderBy(data, 'priority')
     const cards = [
         {
             id: 1,
@@ -25,7 +35,6 @@ const Home: NextPage = () => {
             columnWidthDesktop: 3,
             link: `/service/2`,
             alt: 'РЕМОНТ ХОДОВОЙ ЧАСТИ',
-
         },
         {
             id: 3,
@@ -100,28 +109,36 @@ const Home: NextPage = () => {
         <>
             <Head>
                 <title>AVK service - автосервисы в Подольске</title>
-                <meta name='viewport' content='initial-scale=1.0, width=device-width' />
-                <link rel='stylesheet' href='https://cdn.envybox.io/widget/cbk.css' />
+                <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+                <link rel="stylesheet" href="https://cdn.envybox.io/widget/cbk.css" />
             </Head>
             <LayoutPage>
                 <div>
                     <Banner
-                        title='РЕМОНТ И ОБСЛУЖИВАНИЕ'
-                        description='гарантия 2 года на все услуги'
-                        formTitle='ЗАПИСЬ В СЕРВИС'
-                        buttonText='Отправить'
+                        title="РЕМОНТ И ОБСЛУЖИВАНИЕ"
+                        description="гарантия 2 года на все услуги"
+                        formTitle="ЗАПИСЬ В СЕРВИС"
+                        buttonText="Отправить"
                     />
-                    <Stock description='СКИДКА ПРИ ЗАМЕНЕ МАСЛА' imgLink='./track.png' percent='10%' alt='Все акции' />
+                    {filter && (
+                        <Stock
+                            description={filter[0]?.title?.toUpperCase()}
+                            imgLink="./track.png"
+                            percent={filter[0]?.procent}
+                            alt="Все акции"
+                        />
+                    )}
                     <CameraView links={links} />
                     <Cards cards={cards} />
                     <div style={{ height: '96px' }} />
                 </div>
             </LayoutPage>
-            <Script strategy='afterInteractive'
-                    src='https://cdn.envybox.io/widget/cbk.js?wcb_code=730acf1799c871b0c2610a6ea3716681'
-                    async={true} />
+            <Script
+                strategy="afterInteractive"
+                src="https://cdn.envybox.io/widget/cbk.js?wcb_code=730acf1799c871b0c2610a6ea3716681"
+                async={true}
+            />
         </>
-
     )
 }
 
