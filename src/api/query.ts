@@ -1,19 +1,19 @@
 import axios from 'axios'
 
-export const getAPI = axios.post('http://dev.avksrv.ru/admin/login', {
+export const getAPI = axios.post('https://dev.avksrv.ru/admin/login', {
     'email': 'innerhard@gmail.com',
     'password': 'WhoFuckMe!100505',
 })
 
-export const getAuth = (login: string, password: string) => axios.post('http://dev.avksrv.ru/admin/login', {
+export const getAuth = (login: string, password: string) => axios.post('https://dev.avksrv.ru/admin/login', {
     'email': login,
     'password': password,
 })
 
-export const getCategories = () => axios.get('http://dev.avksrv.ru/category-services')
-export const getPhones = () => axios.get('http://dev.avksrv.ru/callphones')
-export const getStocks = () => axios.get('http://dev.avksrv.ru/all-stocks/')
-export const putPhones = (id: string | number, data: any) => axios.put(`http://dev.avksrv.ru/callphones/${id}`, data)
+export const getCategories = () => axios.get('https://dev.avksrv.ru/category-services')
+export const getPhones = () => axios.get('https://dev.avksrv.ru/callphones')
+export const getStocks = () => axios.get('https://dev.avksrv.ru/all-stocks/')
+export const putPhones = (id: string | number, data: any) => axios.put(`https://dev.avksrv.ru/callphones/${id}`, data)
 
 export const queryAPI = (
     link: string,
