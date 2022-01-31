@@ -1,10 +1,16 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { Styled } from './styled'
 import Link from 'next/link'
 import { AvkLogo, AvkMobile, Clock, Coordinate } from '@icons'
 import { Text } from '@components'
 
-export const Navigation = (): JSX.Element => (
+interface INavigation {
+    phoneNumber: string
+    linkPhoneNumber: string
+    workingMode: string
+}
+
+export const Navigation: FC<INavigation> = ({ phoneNumber, linkPhoneNumber, workingMode }): JSX.Element => (
     <Styled.CustomGridLayout>
         <Styled.WrapperContainer>
             <Styled.DesktopWrapper>
@@ -22,9 +28,9 @@ export const Navigation = (): JSX.Element => (
                 </Link>
             </Styled.MobileWrapper>
             <Styled.MobileWrapper style={{ justifySelf: 'right', paddingTop: '6px' }}>
-                <a href="tel:+74955321922">
+                <a href={linkPhoneNumber}>
                     <Text size={16} fontWeight={700}>
-                        +7(495)532-19-22
+                        {phoneNumber}
                     </Text>
                 </a>
             </Styled.MobileWrapper>
@@ -32,7 +38,7 @@ export const Navigation = (): JSX.Element => (
                 <Styled.WrapperIconBlock>
                     <Clock />
                     <Text size={16} fontWeight={700}>
-                        9:00 - 21:00
+                        {workingMode}
                     </Text>
                 </Styled.WrapperIconBlock>
             </Styled.MobileWrapper>
@@ -53,7 +59,7 @@ export const Navigation = (): JSX.Element => (
                 <Styled.WrapperIconBlock>
                     <Clock />
                     <Text size={16} fontWeight={700}>
-                        9:00 - 21:00
+                        {workingMode}
                     </Text>
                 </Styled.WrapperIconBlock>
             </Styled.DesktopWrapper>
@@ -70,9 +76,9 @@ export const Navigation = (): JSX.Element => (
                 </Styled.WrapperIconBlock>
             </Styled.DesktopWrapper>
             <Styled.DesktopWrapper>
-                <a href="tel:+74955321922">
+                <a href={linkPhoneNumber}>
                     <Text size={24} fontWeight={700}>
-                        +7(495)532-19-22
+                        {phoneNumber}
                     </Text>
                 </a>
             </Styled.DesktopWrapper>

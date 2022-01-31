@@ -6,37 +6,58 @@ import Link from 'next/link'
 
 type TFooterProps = {
     items?: {
-        id: number,
-        title?: string,
-        imageLink?: string,
-        cardColor?: string,
-        textColor?: string,
-        columnWidthDesktop?: number,
-        columnWidthTablet?: number,
-        link?: string,
-        alt?: string,
+        id: number
+        title?: string
+        imageLink?: string
+        cardColor?: string
+        textColor?: string
+        columnWidthDesktop?: number
+        columnWidthTablet?: number
+        link?: string
+        alt?: string
     }[]
+    phoneNumber: string
+    linkPhoneNumber: string
+    otherPhoneNumber: string
+    linkOtherPhoneNumber: string
 }
-export const Footer: FC<TFooterProps> = ({ items }): JSX.Element => {
+export const Footer: FC<TFooterProps> = ({
+    items,
+    phoneNumber,
+    linkPhoneNumber,
+    otherPhoneNumber,
+    linkOtherPhoneNumber,
+}): JSX.Element => {
     const blocks = items?.map(({ link, title, id }) => {
-        return link && title &&
-            <Link key={id} href={link} passHref
-                  prefetch={false}><a>{title[0].toUpperCase() + title.toLowerCase().slice(1)}</a></Link>
+        return (
+            link &&
+            title && (
+                <Link key={id} href={link} passHref prefetch={false}>
+                    <a>{title[0].toUpperCase() + title.toLowerCase().slice(1)}</a>
+                </Link>
+            )
+        )
     })
 
     return (
         <Styled.Container>
             <GridLayout>
                 <Styled.Wrapper>
-                    <Styled.WrapperLink>
-                        {blocks}
-                    </Styled.WrapperLink>
+                    <Styled.WrapperLink>{blocks}</Styled.WrapperLink>
                     <div>
-                        <a href='tel:+74955321922'><Text size={24}>+7 (495) 532-19-22</Text></a>
+                        <a href={linkPhoneNumber}>
+                            <Text size={24}>{phoneNumber}</Text>
+                        </a>
                         <br />
-                        <a href='tel:+79263394243'><Text size={24}>+7 (926) 339-42-43</Text></a>
+                        <a href={linkOtherPhoneNumber}>
+                            <Text size={24}>{otherPhoneNumber}</Text>
+                        </a>
                     </div>
-                    <Link href='/' passHref prefetch={false}><a><AvkLogoWhite /></a></Link>
+                    <Link href="/" passHref prefetch={false}>
+                        <a>
+                            <AvkLogoWhite />
+                        </a>
+                    </Link>
                 </Styled.Wrapper>
             </GridLayout>
         </Styled.Container>
