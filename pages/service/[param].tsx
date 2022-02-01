@@ -221,7 +221,10 @@ const WrapperAddress = styled.div`
     grid-row-gap: 16px;
 
     img {
-        max-width: 288px;
+        padding-bottom: 16px;
+        height: auto;
+        width: 100%;
+        max-width: 700px;
     }
 `
 const WrapperLinkHome = styled.div`
