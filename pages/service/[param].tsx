@@ -219,6 +219,10 @@ const Service: NextPage<TProps> = ({ page }) => {
 const WrapperAddress = styled.div`
     display: grid;
     grid-row-gap: 16px;
+
+    img {
+        max-width: 288px;
+    }
 `
 const WrapperLinkHome = styled.div`
     display: grid;
