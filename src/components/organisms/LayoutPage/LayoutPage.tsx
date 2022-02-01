@@ -1,7 +1,8 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { Navigation, Footer, GridLayout } from '@components'
 import { Styled } from './styled'
 import { theme } from '@theme'
+import { getGlobalInfo } from '../../../api/query'
 
 const items = [
     {
@@ -23,7 +24,6 @@ const items = [
         columnWidthDesktop: 3,
         link: `/service/2/`,
         alt: 'awdawdawdaw',
-
     },
     {
         id: 3,
@@ -55,26 +55,54 @@ const items = [
         alt: 'awdawdawdaw',
     },
 ]
+
+interface IData {
+    globalInfo: null
+    id: number
+    linkOtherPhoneNumber: string
+    linkPhoneNumber: string
+    otherPhoneNumber: string
+    phoneNumber: string
+    siteName: string
+    updated_at: string
+    workingMode: string
+}
+
 export const LayoutPage: FC = ({ children }) => {
-    // const [count, setCount] = useState(0)
-    // const [data, setData] = useState<null>(null)
-    // const [hasError, setError] = useState<boolean>(false)
-    //
-    // useEffect(() => {
-    //     queryAPI('http://localhost:1337/menus', setData, setError)
-    // }, [])
-    //
-    // if (hasError) {
-    //     return <div>ERROR</div>
-    // }
+    const [data, setData] = useState<IData | null>(null)
+    const [hasError, setError] = useState<boolean>(false)
+
+    useEffect(() => {
+        getGlobalInfo()
+            .then(info => {
+                setData(info?.data)
+            })
+            .catch(err => setError(!!err))
+    }, [])
+
+    if (hasError) {
+        return <div>ERROR</div>
+    }
 
     return (
         <Styled.Container>
-            <Navigation />
-            <GridLayout>
-                {children}
-            </GridLayout>
-            <Footer items={items} />
+            {data && (
+                <>
+                    <Navigation
+                        phoneNumber={data.phoneNumber}
+                        linkPhoneNumber={data.linkPhoneNumber}
+                        workingMode={data.workingMode}
+                    />
+                    <GridLayout>{children}</GridLayout>
+                    <Footer
+                        items={items}
+                        phoneNumber={data.phoneNumber}
+                        linkPhoneNumber={data.linkPhoneNumber}
+                        otherPhoneNumber={data.otherPhoneNumber}
+                        linkOtherPhoneNumber={data.linkOtherPhoneNumber}
+                    />
+                </>
+            )}
         </Styled.Container>
     )
 }
