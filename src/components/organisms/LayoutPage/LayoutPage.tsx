@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from 'react'
 import { Navigation, Footer, GridLayout } from '@components'
 import { Styled } from './styled'
 import { theme } from '@theme'
-import { getGlobalInfo, getPhones } from '../../../api/query'
+import { getGlobalInfo } from '../../../api/query'
 
 const items = [
     {
