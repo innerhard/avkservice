@@ -137,20 +137,6 @@ const Service: NextPage<TProps> = ({ page }) => {
                 )}
 
                 <ReactMarkdown children={item?.content || 'No content available'} />
-                <div>
-                    {item?.linkImg && (
-                        <img
-                            src={item?.linkImg}
-                            style={{
-                                paddingBottom: '16px',
-                                height: 'auto',
-                                width: '100%',
-                                maxWidth: '700px',
-                            }}
-                            alt={item?.linkImg}
-                        />
-                    )}
-                </div>
             </>
         )
     })
