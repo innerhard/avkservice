@@ -6,7 +6,7 @@ import { Arrow } from '../../src'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import ReactMarkdown from 'react-markdown'
-import { getCategories } from '../../src/api/query'
+import { getCardsBlocks, getCategories } from '../../src/api/query'
 import { Skeleton } from '@mui/material'
 
 type TPageData = {
@@ -83,9 +83,10 @@ const pages: TPages = {
     5: five,
 }
 export const getStaticPaths: GetStaticPaths<TParams> = async () => {
-    const paths = Object.keys(pages).map(page => ({
+    const result: { url: number, id: number }[] = await getCardsBlocks().then(data => data?.data)
+    const paths = result.map(page => ({
         params: {
-            param: page /* pages keys */,
+            param: page?.id?.toString() /* pages keys */,
         },
     }))
 
@@ -113,32 +114,7 @@ const Service: NextPage<TProps> = ({ page }) => {
     }, [page.meta.pageName])
 
     const content = data?.services?.map((item: any) => {
-        return (
-            <>
-                {item?.title && (
-                    <Text
-                        size={24}
-                        sizeMob={22}
-                        fontWeight={700}
-                        style={{ whiteSpace: 'pre-line', paddingBottom: '16px' }}
-                    >
-                        {item?.title}
-                    </Text>
-                )}
-                {item?.text && (
-                    <Text
-                        size={18}
-                        sizeMob={18}
-                        fontWeight={700}
-                        style={{ whiteSpace: 'pre-line', paddingBottom: '16px' }}
-                    >
-                        {item?.text}
-                    </Text>
-                )}
-
-                <ReactMarkdown children={item?.content || 'No content available'} />
-            </>
-        )
+        return <ReactMarkdown children={item?.content || 'Статья находится в разработке!'} />
     })
 
     return (
@@ -157,9 +133,7 @@ const Service: NextPage<TProps> = ({ page }) => {
                 </Text>
 
                 {content ? (
-                    <Text size={18} sizeMob={18} fontWeight={700} style={{ whiteSpace: 'pre-line' }}>
-                        {content}
-                    </Text>
+                    <div>{content}</div>
                 ) : (
                     <div>
                         <Skeleton />

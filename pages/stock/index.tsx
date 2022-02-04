@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 
-import { LayoutPage, Text } from '@components'
+import { LayoutPage } from '@components'
 import styled from 'styled-components'
 import { Arrow, theme } from '../../src'
 import Link from 'next/link'
@@ -14,6 +14,7 @@ const Stock: NextPage = () => {
     useEffect(() => {
         getStocks().then(data => {
             const result = orderBy(data?.data, 'priority')
+            // @ts-ignore
             setData(result)
         })
     }, [])
@@ -39,7 +40,7 @@ const Stock: NextPage = () => {
                                 <CustomImage src={image?.name} alt={image?.name} />
                             </div>
                         )}
-                        <div>Окончание акции {expiration}</div>
+                        {expiration && <div>Окончание акции {expiration}</div>}
                     </WrapperBlock>
                 ))}
                 <div style={{ height: '480px' }} />
