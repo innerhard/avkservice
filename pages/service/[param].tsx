@@ -38,7 +38,6 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
 
 const Service: NextPage = ({data}) => {
 
-    console.log({data})
     const content = data?.services?.map((item: any) => {
         return <ReactMarkdown children={item?.content || 'Статья находится в разработке!'}/>
     })
