@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { LayoutPage } from '../src'
+import { LayoutPage, theme } from '../src'
 import { NotFound } from '../src/icons/404'
 
 export default function Custom404() {
@@ -14,6 +14,10 @@ export default function Custom404() {
 
 const WrapperAddress = styled.div`
     display: grid;
-    min-height: calc(100vh - 200px); 
+    min-height: calc(70vh);
     bottom: 0;
+
+    @media (min-width: ${theme.breakpoint.desktopSm}px) {
+        min-height: calc(80vh);
+    }
 `

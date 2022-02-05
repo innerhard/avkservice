@@ -1,72 +1,23 @@
 import type { NextPage } from 'next'
 import { Banner, CameraView, Cards, LayoutPage, Stock } from '@components'
-import { theme } from '../src'
 import Head from 'next/head'
 import Script from 'next/script'
 import { useEffect, useState } from 'react'
-import { getStocks } from '../src/api/query'
+import { getCardsBlocks, getStocks } from '../src/api/query'
 import { orderBy } from 'lodash'
 
 const Home: NextPage = () => {
     const [data, setData] = useState([])
+    const [blocks, setBlocks] = useState([])
     useEffect(() => {
         getStocks().then(data => {
             setData(data?.data)
         })
+        getCardsBlocks().then(data => {
+            setBlocks(data?.data)
+        })
     }, [])
     const filter = orderBy(data, 'priority')
-    const cards = [
-        {
-            id: 1,
-            title: 'КОМПЬЮТЕРНАЯ ДИАГНОСТИКА',
-            imageLink: './computer.png',
-            cardColor: theme.colors.red.step0,
-            columnWidthDesktop: 3,
-            columnWidthTablet: 3,
-            textColor: theme.colors.white.step0,
-            link: `/service/1`,
-            alt: 'КОМПЬЮТЕРНАЯ ДИАГНОСТИКА',
-        },
-        {
-            id: 2,
-            title: 'РЕМОНТ ХОДОВОЙ ЧАСТИ',
-            imageLink: './chassis.png',
-            cardColor: theme.colors.gray.step2,
-            columnWidthDesktop: 3,
-            link: `/service/2`,
-            alt: 'РЕМОНТ ХОДОВОЙ ЧАСТИ',
-        },
-        {
-            id: 3,
-            title: 'РЕМОНТ КПП',
-            imageLink: './kpp.png',
-            cardColor: theme.colors.gray.step1,
-            textColor: theme.colors.white.step0,
-            columnWidthDesktop: 2,
-            link: `/service/3`,
-            alt: 'РЕМОНТ КПП',
-        },
-        {
-            id: 4,
-            title: 'РЕМОНТ ДВС',
-            imageLink: './heart.png',
-            cardColor: theme.colors.gray.step2,
-            columnWidthDesktop: 2,
-            link: `/service/4`,
-            alt: 'РЕМОНТ ДВС',
-        },
-        {
-            id: 5,
-            title: 'ЗАМЕНА ТЕХ.ЖИДКОСТЕЙ',
-            imageLink: './shell-oil.png',
-            cardColor: theme.colors.red.step0,
-            textColor: theme.colors.white.step0,
-            columnWidthDesktop: 2,
-            link: `/service/5`,
-            alt: 'ЗАМЕНА ТЕХ.ЖИДКОСТЕЙ',
-        },
-    ]
-
     const links = [
         {
             id: 1,
@@ -129,7 +80,7 @@ const Home: NextPage = () => {
                         />
                     )}
                     <CameraView links={links} />
-                    <Cards cards={cards} />
+                    {blocks && <Cards cards={blocks} />}
                     <div style={{ height: '96px' }} />
                 </div>
             </LayoutPage>

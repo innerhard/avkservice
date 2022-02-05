@@ -14,7 +14,7 @@ const SignupSchema = Yup.object().shape({
         .transform(value => value.replace(/[^\d]/g, ''))
         .min(11, 'Введите корректный номер')
         .required('Введите корректный номер'),
-    lastName: Yup.string().required('Введите корректное имя'),
+    lastName: Yup.string().trim().required('Введите корректное имя'),
 })
 
 type TBannerProps = {
