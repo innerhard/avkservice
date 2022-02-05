@@ -5,9 +5,9 @@ import {LayoutPage, Text} from '@components'
 import styled from 'styled-components'
 import {Arrow} from '../../src'
 import Link from 'next/link'
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import ReactMarkdown from 'react-markdown'
-import {getCardsBlocks, getCategories} from '../../src/api/query'
+import {getCategories} from '../../src/api/query'
 import {Skeleton} from '@mui/material'
 import {AxiosResponse} from "axios";
 
