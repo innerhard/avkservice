@@ -1,34 +1,35 @@
 // @ts-nocheck
-import type {GetStaticPaths, NextPage} from 'next'
-import {GetStaticProps} from 'next'
-import {LayoutPage, Text} from '@components'
+import type { GetStaticPaths, NextPage } from 'next'
+import { GetStaticProps } from 'next'
+import { LayoutPage, Text } from '@components'
 import styled from 'styled-components'
-import {Arrow} from '../../src'
+import { Arrow } from '../../src'
 import Link from 'next/link'
 import React from 'react'
 import ReactMarkdown from 'react-markdown'
-import {getCategories} from '../../src/api/query'
-import {Skeleton} from '@mui/material'
-import {AxiosResponse} from "axios";
+import { getCategories } from '../../src/api/query'
+import { Skeleton } from '@mui/material'
+import { AxiosResponse } from 'axios'
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    const {data}: AxiosResponse [] = await getCategories()
-    const paths = data?.map(({url}) => ({
+    const { data }: AxiosResponse [] = await getCategories()
+    const paths = data?.map(({ url }) => ({
         params: {
             param: url.toString(),
         },
     }))
 
-    return {paths, fallback: false}
+    return { paths, fallback: false }
 }
 
-export const getStaticProps: GetStaticProps = async ({params}) => {
-    const {data, status} = await getCategories()
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+    console.log(params)
+    const { data, status } = await getCategories()
 
     if (status === 200) {
         return {
             props: {
-                data: data[String(params?.param - 1)],
+                data: data.find(({ url }) => url === params.param),
             },
             revalidate: 60,
         }
@@ -36,10 +37,10 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
     throw new Error('Техническая ошибка')
 }
 
-const Service: NextPage = ({data}) => {
-
+const Service: NextPage = ({ data }) => {
+    console.log({ data })
     const content = data?.services?.map((item: any) => {
-        return <ReactMarkdown children={item?.content || 'Статья находится в разработке!'}/>
+        return <ReactMarkdown key={item?.id} children={item?.content || 'Статья находится в разработке!'} />
     })
 
     return (
@@ -48,12 +49,12 @@ const Service: NextPage = ({data}) => {
                 <Link href={`/`} passHref>
                     <a>
                         <WrapperLinkHome>
-                            <Arrow/>
+                            <Arrow />
                             Назад
                         </WrapperLinkHome>
                     </a>
                 </Link>
-                <Text size={32} sizeMob={24} fontWeight={700} style={{whiteSpace: 'pre-line'}}>
+                <Text size={32} sizeMob={24} fontWeight={700} style={{ whiteSpace: 'pre-line' }}>
                     {data?.title}
                 </Text>
 
@@ -61,41 +62,41 @@ const Service: NextPage = ({data}) => {
                     <div>{content}</div>
                 ) : (
                     <div>
-                        <Skeleton/>
-                        <Skeleton/>
-                        <Skeleton/>
-                        <Skeleton/>
-                        <Skeleton/>
-                        <Skeleton/>
-                        <Skeleton/>
-                        <Skeleton/>
-                        <Skeleton/>
-                        <Skeleton/>
-                        <Skeleton/>
-                        <Skeleton/>
-                        <Skeleton/>
-                        <Skeleton/>
-                        <Skeleton/>
-                        <Skeleton/>
-                        <Skeleton/>
-                        <Skeleton/>
-                        <Skeleton/>
-                        <Skeleton/>
-                        <Skeleton/>
-                        <Skeleton/>
-                        <Skeleton/>
-                        <Skeleton/>
-                        <Skeleton/>
-                        <Skeleton/>
-                        <Skeleton/>
-                        <Skeleton/>
-                        <Skeleton/>
-                        <Skeleton/>
-                        <Skeleton/>
-                        <Skeleton/>
+                        <Skeleton />
+                        <Skeleton />
+                        <Skeleton />
+                        <Skeleton />
+                        <Skeleton />
+                        <Skeleton />
+                        <Skeleton />
+                        <Skeleton />
+                        <Skeleton />
+                        <Skeleton />
+                        <Skeleton />
+                        <Skeleton />
+                        <Skeleton />
+                        <Skeleton />
+                        <Skeleton />
+                        <Skeleton />
+                        <Skeleton />
+                        <Skeleton />
+                        <Skeleton />
+                        <Skeleton />
+                        <Skeleton />
+                        <Skeleton />
+                        <Skeleton />
+                        <Skeleton />
+                        <Skeleton />
+                        <Skeleton />
+                        <Skeleton />
+                        <Skeleton />
+                        <Skeleton />
+                        <Skeleton />
+                        <Skeleton />
+                        <Skeleton />
                     </div>
                 )}
-                <div style={{height: '96px'}}/>
+                <div style={{ height: '96px' }} />
             </WrapperAddress>
         </LayoutPage>
     )
