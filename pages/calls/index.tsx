@@ -4,6 +4,7 @@ import { DataGrid, GridColDef, GridApi, GridCellValue } from '@mui/x-data-grid'
 import { LayoutPage } from '@components'
 import styled from 'styled-components'
 import {
+    Alert,
     Button,
     Divider,
     FormControl,
@@ -16,14 +17,13 @@ import {
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import { useCookies } from 'react-cookie'
-import UpdateIcon from '@mui/icons-material/Update'
 import { getAuth, getPhones, putPhones } from '../../src/api/query'
-import { times } from 'lodash'
 
 const Calls: NextPage = () => {
     const operator = 'Operator'
     const [auth, setAuth] = useState(false)
     const [data, setData] = useState<any>([])
+    const [isDialog, setDialog] = useState(true)
     const [login, setLogin] = useState('')
     const [password, setPassword] = useState('')
     const [showPassword, setShowPassword] = useState(false)
@@ -44,10 +44,25 @@ const Calls: NextPage = () => {
     }
 
     useEffect(() => {
+        const interval = setInterval(() => {
+            getPhones().then(info => {
+                setData(info?.data)
+            })
+        }, 60000)
+
+        return () => clearInterval(interval)
+    }, [])
+
+    useEffect(() => {
         getPhones().then(info => {
             setData(info?.data)
         })
     }, [])
+    const filterData = data?.filter((item: { call: boolean }) => item?.call === false) || []
+    useEffect(() => {
+        filterData?.length > 0 && setDialog(true)
+        filterData?.length === 0 && setDialog(false)
+    }, [filterData])
 
     const columns: GridColDef[] = [
         { field: 'id', headerName: 'ID', width: 70 },
@@ -107,6 +122,7 @@ const Calls: NextPage = () => {
         { field: 'dateCall', headerName: 'Дата ответа на заявку', width: 200 },
         { field: 'operator', headerName: 'Кто перезвонил', width: 200 },
     ]
+
     return (
         <LayoutPage>
             <WrapperAddress>
@@ -117,6 +133,11 @@ const Calls: NextPage = () => {
                                 Обновить таблицу
                             </Button>
                             <Divider style={{ margin: '16px 0' }} />
+                            {isDialog && data && (
+                                <Alert severity="info" style={{ position: 'fixed', zIndex: 2, bottom: 20, right: 20 }}>
+                                    {filterData?.length} новый(ых) клент(а)
+                                </Alert>
+                            )}
                             <DataGrid
                                 rows={data}
                                 columns={columns}
