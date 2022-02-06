@@ -30,7 +30,7 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
             props: {
                 data: data[String(params?.param - 1)],
             },
-            revalidate: 3600,
+            revalidate: 60,
         }
     }
     throw new Error('Техническая ошибка')
