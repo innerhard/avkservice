@@ -4,8 +4,8 @@ import { DataGrid, GridColDef, GridApi, GridCellValue } from '@mui/x-data-grid'
 import { LayoutPage } from '@components'
 import styled from 'styled-components'
 import {
-    Alert,
     Button,
+    CardContent,
     Divider,
     FormControl,
     IconButton,
@@ -13,6 +13,7 @@ import {
     InputLabel,
     OutlinedInput,
     TextField,
+    Typography,
 } from '@mui/material'
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
@@ -134,9 +135,35 @@ const Calls: NextPage = () => {
                             </Button>
                             <Divider style={{ margin: '16px 0' }} />
                             {isDialog && data && (
-                                <Alert severity="info" style={{ position: 'fixed', zIndex: 2, bottom: 20, right: 20 }}>
-                                    {filterData?.length} новый(ых) клент(а)
-                                </Alert>
+                                <div
+                                    style={{
+                                        position: 'fixed',
+                                        zIndex: 2,
+                                        bottom: 20,
+                                        right: 20,
+                                        background: '#FFFFFF',
+                                        border: '2px solid #000000',
+                                    }}
+                                >
+                                    <CardContent>
+                                        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                                            {filterData?.length} новый(ых) клент(а)
+                                        </Typography>
+                                        {filterData?.map((item: { phoneNumber: any; lastName: any }) => {
+                                            return (
+                                                <>
+                                                    <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                                                        {item?.lastName}
+                                                    </Typography>
+                                                    <Typography variant="h5" component="div">
+                                                        {item?.phoneNumber}
+                                                    </Typography>
+                                                    <br/>
+                                                </>
+                                            )
+                                        })}
+                                    </CardContent>
+                                </div>
                             )}
                             <DataGrid
                                 rows={data}
