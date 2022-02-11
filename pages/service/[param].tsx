@@ -11,10 +11,6 @@ import { getCategories } from '../../src/api/query'
 import { Skeleton } from '@mui/material'
 import { AxiosResponse } from 'axios'
 
-export const config = {
-    unstable_runtimeJS: false,
-}
-
 export const getStaticPaths: GetStaticPaths = async () => {
     const { data }: AxiosResponse[] = await getCategories()
     const paths = data?.map(({ url }) => ({
