@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react'
 import type { NextPage } from 'next'
 import { DataGrid, GridColDef, GridApi, GridCellValue } from '@mui/x-data-grid'
 import { LayoutPage } from '@components'
-import styled from 'styled-components'
+import { pulse } from 'react-animations'
+import useSound from 'use-sound'
+import styled, { keyframes } from 'styled-components'
 import {
     Button,
     CardContent,
@@ -21,6 +23,7 @@ import { useCookies } from 'react-cookie'
 import { getAuth, getPhones, putPhones } from '../../src/api/query'
 
 const Calls: NextPage = () => {
+    const [play] = useSound('./1.mp3')
     const operator = 'Operator'
     const [auth, setAuth] = useState(false)
     const [data, setData] = useState<any>([])
@@ -29,6 +32,7 @@ const Calls: NextPage = () => {
     const [password, setPassword] = useState('')
     const [showPassword, setShowPassword] = useState(false)
     const [cookies, setCookie] = useCookies(['avkcall'])
+    const [isNew, setNew] = useState(true)
 
     const handleAuth = () =>
         getAuth(login, password)
@@ -49,7 +53,7 @@ const Calls: NextPage = () => {
             getPhones().then(info => {
                 setData(info?.data)
             })
-        }, 60000)
+        }, 15000)
 
         return () => clearInterval(interval)
     }, [])
@@ -62,6 +66,7 @@ const Calls: NextPage = () => {
     const filterData = data?.filter((item: { call: boolean }) => item?.call === false) || []
     useEffect(() => {
         filterData?.length > 0 && setDialog(true)
+        filterData?.length > 0 && setTimeout(() => play(), 500)
         filterData?.length === 0 && setDialog(false)
     }, [filterData])
 
@@ -130,9 +135,17 @@ const Calls: NextPage = () => {
                 <div>
                     {auth || cookies.avkcall ? (
                         <>
-                            <Button variant="contained" onClick={handleUpdateData}>
-                                Обновить таблицу
-                            </Button>
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gridColumnGap: '8px' }}>
+                                <Button variant="contained" onClick={handleUpdateData}>
+                                    Обновить таблицу
+                                </Button>
+                                <Button variant={isNew ? 'outlined' : 'text'} onClick={() => setNew(true)}>
+                                    Новые клиенты
+                                </Button>
+                                <Button variant={isNew ? 'text' : 'outlined'} onClick={() => setNew(false)}>
+                                    Общая база
+                                </Button>
+                            </div>
                             <Divider style={{ margin: '16px 0' }} />
                             {isDialog && data && (
                                 <div
@@ -145,28 +158,29 @@ const Calls: NextPage = () => {
                                         border: '2px solid #000000',
                                     }}
                                 >
-                                    <CardContent>
+                                    <BouncyDiv style={{ overflow: 'overlay', height: '200px', padding: '8px' }}>
                                         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                                             {filterData?.length} новый(ых) клент(а)
                                         </Typography>
                                         {filterData?.map((item: { phoneNumber: any; lastName: any }) => {
                                             return (
                                                 <>
+                                                    {/*{filterData?.length && play()}*/}
                                                     <Typography sx={{ mb: 1.5 }} color="text.secondary">
                                                         {item?.lastName}
                                                     </Typography>
                                                     <Typography variant="h5" component="div">
                                                         {item?.phoneNumber}
                                                     </Typography>
-                                                    <br/>
+                                                    <br />
                                                 </>
                                             )
                                         })}
-                                    </CardContent>
+                                    </BouncyDiv>
                                 </div>
                             )}
                             <DataGrid
-                                rows={data}
+                                rows={isNew ? filterData : data}
                                 columns={columns}
                                 pageSize={15}
                                 rowsPerPageOptions={[1]}
@@ -218,5 +232,10 @@ const WrapperLogin = styled.div`
     display: grid;
     grid-row-gap: 24px;
     height: 150px;
+`
+const bounceAnimation = keyframes`${pulse}`
+
+const BouncyDiv = styled.div`
+    animation: 3s infinite ${bounceAnimation};
 `
 export default Calls
