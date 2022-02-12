@@ -39,7 +39,7 @@ export const Banner: FC<TBannerProps> = ({ title, description, formTitle, button
         validateOnChange: false,
         onSubmit: values => {
             setSend(true)
-            axios.post('http://dev.avksrv.ru/callphones', { ...values, street: street, call: false, date: date })
+            axios.post('https://dev.avksrv.ru/callphones', { ...values, street: street, call: false, date: date })
             setTimeout(() => {
                 setSend(false)
             }, 20000)

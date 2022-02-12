@@ -12,7 +12,7 @@ import { Skeleton } from '@mui/material'
 import { AxiosResponse } from 'axios'
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    const { data }: AxiosResponse [] = await getCategories()
+    const { data }: AxiosResponse[] = await getCategories()
     const paths = data?.map(({ url }) => ({
         params: {
             param: url.toString(),
@@ -23,7 +23,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-    console.log(params)
     const { data, status } = await getCategories()
 
     if (status === 200) {
@@ -103,19 +102,19 @@ const Service: NextPage = ({ data }) => {
 }
 
 const WrapperAddress = styled.div`
-  display: grid;
-  grid-row-gap: 16px;
+    display: grid;
+    grid-row-gap: 16px;
 
-  img {
-    padding-bottom: 16px;
-    height: auto;
-    width: 100%;
-    max-width: 700px;
-  }
+    img {
+        padding-bottom: 16px;
+        height: auto;
+        width: 100%;
+        max-width: 700px;
+    }
 `
 const WrapperLinkHome = styled.div`
-  display: grid;
-  grid-template-columns: 13px 1fr;
-  grid-column-gap: 16px;
+    display: grid;
+    grid-template-columns: 13px 1fr;
+    grid-column-gap: 16px;
 `
 export default Service

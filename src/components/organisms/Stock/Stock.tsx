@@ -42,7 +42,7 @@ export const Stock: FC<TStockProps> = ({ imgLink, description, percent, alt }) =
                         justifySelf: 'center',
                     }}
                 >
-                    {percent}%
+                    {percent && percent + '%'}
                 </Text>
             </Styled.WrapperStock>
             <Styled.WrapperSpacing>
