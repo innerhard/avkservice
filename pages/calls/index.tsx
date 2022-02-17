@@ -7,7 +7,6 @@ import useSound from 'use-sound'
 import styled, { keyframes } from 'styled-components'
 import {
     Button,
-    CardContent,
     Divider,
     FormControl,
     IconButton,
