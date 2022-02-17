@@ -65,7 +65,7 @@ const Calls: NextPage = () => {
     const filterData = data?.filter((item: { call: boolean }) => item?.call === false) || []
     useEffect(() => {
         filterData?.length > 0 && setDialog(true)
-        filterData?.length > 0 && setTimeout(() => play(), 500)
+        filterData?.length > 0 && auth && setTimeout(() => play(), 500)
         filterData?.length === 0 && setDialog(false)
     }, [filterData])
 
