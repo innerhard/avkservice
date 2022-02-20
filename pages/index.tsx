@@ -40,19 +40,22 @@ const Home: NextPage = () => {
         {
             id: 4,
             title: 'string',
-            link: 'https://open.ivideon.com/embed/v2/?server=100-ErDn2MEmnEPRnd6IJnHT2b&camera=524288&width=&height=&lang=ru',
+            link: 'https://open.ivideon.com/embed/v2/?server=100-ErDn2MEmnEPRnd6IJnHT2b&camera=589824&lang=ru',
+            buttonName: 'Ресепшн',
             boxAddress: 'ул.43-й армии, 16',
         },
         {
             id: 5,
             title: 'string',
-            link: 'https://open.ivideon.com/embed/v2/?server=100-ErDn2MEmnEPRnd6IJnHT2b&camera=131072&width=&height=&lang=ru',
+            link: 'https://open.ivideon.com/embed/v2/?server=100-ErDn2MEmnEPRnd6IJnHT2b&camera=655360&lang=ru',
+            buttonName: 'Сервис',
             boxAddress: 'ул.43-й армии, 16',
         },
         {
             id: 6,
             title: 'string',
-            link: 'https://open.ivideon.com/embed/v2/?server=100-ErDn2MEmnEPRnd6IJnHT2b&camera=655360&width=&height=&lang=ru',
+            link: 'https://open.ivideon.com/embed/v2/?server=100-ErDn2MEmnEPRnd6IJnHT2b&camera=458752&lang=ru',
+            buttonName: 'Мойка',
             boxAddress: 'ул.43-й армии, 16',
         },
     ]
@@ -87,6 +90,11 @@ const Home: NextPage = () => {
             <Script
                 strategy="afterInteractive"
                 src="https://cdn.envybox.io/widget/cbk.js?wcb_code=730acf1799c871b0c2610a6ea3716681"
+                async={true}
+            />
+            <Script
+                strategy="afterInteractive"
+                src="https://open.ivideon.com/embed/v2/embedded.js"
                 async={true}
             />
         </>

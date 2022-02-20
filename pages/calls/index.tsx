@@ -7,7 +7,6 @@ import useSound from 'use-sound'
 import styled, { keyframes } from 'styled-components'
 import {
     Button,
-    CardContent,
     Divider,
     FormControl,
     IconButton,
@@ -66,7 +65,7 @@ const Calls: NextPage = () => {
     const filterData = data?.filter((item: { call: boolean }) => item?.call === false) || []
     useEffect(() => {
         filterData?.length > 0 && setDialog(true)
-        filterData?.length > 0 && setTimeout(() => play(), 500)
+        filterData?.length > 0 && (auth || cookies.avkcall) && setTimeout(() => play(), 500)
         filterData?.length === 0 && setDialog(false)
     }, [filterData])
 
@@ -236,6 +235,6 @@ const WrapperLogin = styled.div`
 const bounceAnimation = keyframes`${pulse}`
 
 const BouncyDiv = styled.div`
-    animation: 3s infinite ${bounceAnimation};
+  animation: 3s infinite ${bounceAnimation};
 `
 export default Calls

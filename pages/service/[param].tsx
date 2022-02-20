@@ -19,7 +19,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
         },
     }))
 
-    return { paths, fallback: false }
+    return { paths, fallback: true }
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
@@ -30,7 +30,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
             props: {
                 data: data.find(({ url }) => url === params.param),
             },
-            revalidate: 60,
+            revalidate: 10,
         }
     }
     throw new Error('Техническая ошибка')

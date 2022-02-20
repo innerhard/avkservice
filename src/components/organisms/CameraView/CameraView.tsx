@@ -3,17 +3,14 @@ import { Text } from '@components'
 import { Styled } from './styled'
 import { theme } from '@theme'
 
-
 type TCameraViewProps = {
-    links?:
-        {
-            id: number
-            title?: string
-            link?: string
-            boxAddress?: string
-        }[]
-
-
+    links?: {
+        id: number
+        title?: string
+        link?: string
+        boxAddress?: string
+        buttonName?: string
+    }[]
 }
 
 export const CameraView: FC<TCameraViewProps> = ({ links }) => {
@@ -30,41 +27,51 @@ export const CameraView: FC<TCameraViewProps> = ({ links }) => {
     }
 
     return (
-
         <Styled.WrapperCameraView>
-            <Text size={32} sizeMob={24} fontWeight={900}>Online-трансляция</Text>
+            <Text size={32} sizeMob={24} fontWeight={900}>
+                Online-трансляция
+            </Text>
             <Styled.AddressWrapper>
-                {
-                    uniqueBox?.map((item, index) => <Styled.CustomButton key={index}
-                                                                         bgcolor={item === addressBoxes ? theme.colors.red.step0 : '#1F1F1F'}
-                                                                         onClick={() => handleBoxAddress(item)}>
+                {uniqueBox?.map((item, index) => (
+                    <Styled.CustomButton
+                        key={index}
+                        bgcolor={item === addressBoxes ? theme.colors.red.step0 : '#1F1F1F'}
+                        onClick={() => handleBoxAddress(item)}
+                    >
                         {item}
-                    </Styled.CustomButton>)
-                }
-
+                    </Styled.CustomButton>
+                ))}
             </Styled.AddressWrapper>
             <Styled.BoxWrapper>
-                {
-                    links?.filter(({ boxAddress }) => boxAddress === addressBoxes).map(({ id }, index) =>
-                        <Styled.CustomButton key={id}
-                                             bgcolor={box === id ? theme.colors.red.step0 : '#1F1F1F'}
-                                             onClick={() => setBox(id)}>
-                            Бокс {index + 1}
-                        </Styled.CustomButton>)
-                }
-
+                {links
+                    ?.filter(({ boxAddress }) => boxAddress === addressBoxes)
+                    .map(({ id, buttonName }, index) => (
+                        <Styled.CustomButton
+                            key={id}
+                            bgcolor={box === id ? theme.colors.red.step0 : '#1F1F1F'}
+                            onClick={() => setBox(id)}
+                        >
+                            {buttonName ?? `Бокс ${index + 1}`}
+                        </Styled.CustomButton>
+                    ))}
             </Styled.BoxWrapper>
-
-            {links?.filter(({ id, boxAddress }) => id === box && boxAddress === addressBoxes).map(({
-                                                                                                       link,
-                                                                                                       id,
-                                                                                                   }) => {
-                return <iframe key={id} className='iv-i'
-                               src={link}
-                               width='100%' height='252' frameBorder='0' style={{ borderRadius: '8px' }} />
-            })}
+            <Styled.WrapperLoader>
+                {links
+                    ?.filter(({ id, boxAddress }) => id === box && boxAddress === addressBoxes)
+                    .map(({ link, id }) => {
+                        return (
+                            <iframe
+                                key={id}
+                                className="iv-i"
+                                src={link}
+                                width="100%"
+                                height="252"
+                                frameBorder="0"
+                                style={{ borderRadius: '8px' }}
+                            />
+                        )
+                    })}
+            </Styled.WrapperLoader>
         </Styled.WrapperCameraView>
-
     )
 }
-
