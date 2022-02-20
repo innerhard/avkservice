@@ -69,10 +69,16 @@ const CustomButton = styled.button<TButtonProps>`
 ,
 
 `
+const WrapperLoader = styled.div`
+  display: grid;
+  background: #000000;
+  border-radius: 8px
+`
 
 export const Styled = {
     WrapperCameraView,
     CustomButton,
     AddressWrapper,
     BoxWrapper,
+    WrapperLoader
 }
