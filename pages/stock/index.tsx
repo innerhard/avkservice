@@ -37,7 +37,7 @@ const Stock: NextPage = () => {
                         <div>{description}</div>
                         {image?.url && (
                             <div>
-                                <CustomImage src={image?.name} alt={image?.name} />
+                                <CustomImage src={'https://dev.avksrv.ru' + image?.url} alt={image?.url} />
                             </div>
                         )}
                         {expiration && <div>Окончание акции {expiration}</div>}

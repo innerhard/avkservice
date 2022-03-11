@@ -24,8 +24,6 @@ export const CameraView: FC<TCameraViewProps> = ({ links }) => {
     const result = links?.filter(({ boxAddress }) => boxAddress === addressBoxes)
     const sortLinks = _.sortBy(result, ['id'])
 
-    console.log(box)
-
     const handleBoxAddress = (address: string | undefined) => {
         setBox(firstElement)
         setSetAddressBoxes(address)
@@ -34,7 +32,6 @@ export const CameraView: FC<TCameraViewProps> = ({ links }) => {
     useEffect(() => {
         setData(uniqueBox)
         setSetAddressBoxes(uniqueBox[0])
-        console.log(uniqueBox[0])
     }, [links])
 
     useEffect(() => {
