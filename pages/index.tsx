@@ -27,13 +27,12 @@ const Home: NextPage = () => {
     }, [])
     const filter = orderBy(data, 'priority')
 
-    const widgetsScript = widgets?.map(({ link }) => <Script strategy="afterInteractive" src={link} async={true} />)
+    const widgetsScript = widgets?.map(({ link }, index) => <Script key={index} strategy="afterInteractive" src={link} async={true} />)
     return (
         <>
             <Head>
                 <title>AVK service - автосервисы в Подольске</title>
                 <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-                <link rel="stylesheet" href="https://cdn.envybox.io/widget/cbk.css" />
             </Head>
             <LayoutPage>
                 <div>
@@ -57,6 +56,7 @@ const Home: NextPage = () => {
                 </div>
             </LayoutPage>
             {widgetsScript}
+            <link rel="stylesheet" href="https://cdn.envybox.io/widget/cbk.css" />
         </>
     )
 }
