@@ -7,7 +7,7 @@ import { getCameraBlocks, getCardsBlocks, getStocks } from '../src/api/query'
 import { orderBy } from 'lodash'
 
 const Home: NextPage = () => {
-    const [data, setData] = useState([])
+    const [data, setData] = useState < any[] > ([])
     const [blocks, setBlocks] = useState([])
     const [cameraData, setCameraData] = useState([])
     useEffect(() => {
@@ -26,23 +26,23 @@ const Home: NextPage = () => {
         <>
             <Head>
                 <title>AVK service - автосервисы в Подольске</title>
-                <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-                <link rel="stylesheet" href="https://cdn.envybox.io/widget/cbk.css" />
+                <meta name='viewport' content='initial-scale=1.0, width=device-width' />
+                <link rel='stylesheet' href='https://cdn.envybox.io/widget/cbk.css' />
             </Head>
             <LayoutPage>
                 <div>
                     <Banner
-                        title="РЕМОНТ И ОБСЛУЖИВАНИЕ"
-                        description="гарантия 2 года на все услуги"
-                        formTitle="ЗАПИСЬ В СЕРВИС"
-                        buttonText="Отправить"
+                        title='РЕМОНТ И ОБСЛУЖИВАНИЕ'
+                        description='гарантия 2 года на все услуги'
+                        formTitle='ЗАПИСЬ В СЕРВИС'
+                        buttonText='Отправить'
                     />
                     {filter && (
                         <Stock
                             description={filter[0]?.title?.toUpperCase()}
                             imgLink={filter[0]?.image?.url}
                             percent={filter[0]?.procent}
-                            alt="Все акции"
+                            alt='Все акции'
                         />
                     )}
                     <CameraView links={cameraData} />
@@ -51,11 +51,11 @@ const Home: NextPage = () => {
                 </div>
             </LayoutPage>
             <Script
-                strategy="afterInteractive"
-                src="https://cdn.envybox.io/widget/cbk.js?wcb_code=730acf1799c871b0c2610a6ea3716681"
+                strategy='afterInteractive'
+                src='https://cdn.envybox.io/widget/cbk.js?wcb_code=730acf1799c871b0c2610a6ea3716681'
                 async={true}
             />
-            <Script strategy="afterInteractive" src="https://open.ivideon.com/embed/v2/embedded.js" async={true} />
+            <Script strategy='afterInteractive' src='https://open.ivideon.com/embed/v2/embedded.js' async={true} />
         </>
     )
 }

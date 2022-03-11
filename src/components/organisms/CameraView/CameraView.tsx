@@ -20,7 +20,7 @@ export const CameraView: FC<TCameraViewProps> = ({ links }) => {
     const [addressBoxes, setSetAddressBoxes] = useState<string | undefined>(data && data[0])
     const filterLinks = links?.filter(({ boxAddress }) => boxAddress === address)
     const firstElement = filterLinks && filterLinks[0]?.id
-    const [box, setBox] = useState<number>(firstElement || 4)
+    const [box, setBox] = useState<number | undefined>(firstElement || 4)
     const result = links?.filter(({ boxAddress }) => boxAddress === addressBoxes)
     const sortLinks = _.sortBy(result, ['id'])
 
@@ -58,7 +58,7 @@ export const CameraView: FC<TCameraViewProps> = ({ links }) => {
                 ))}
             </Styled.AddressWrapper>
             <Styled.BoxWrapper>
-                {sortLinks.map(({ id, buttonName }, index) => (
+                {sortLinks.map(({ id, buttonName }) => (
                     <Styled.CustomButton
                         key={id}
                         bgcolor={box === id ? theme.colors.red.step0 : '#1F1F1F'}
