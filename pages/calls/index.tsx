@@ -39,7 +39,7 @@ const Calls: NextPage = () => {
                 setAuth(!!data)
                 setCookie('avkcall', 'true', { maxAge: 3600 })
             })
-            .catch(data => alert('Неверный логин или пароль'))
+            .catch(() => alert('Неверный логин или пароль'))
 
     const handleUpdateData = () => {
         getPhones().then(info => {
@@ -70,7 +70,6 @@ const Calls: NextPage = () => {
     }, [filterData])
 
     const columns: GridColDef[] = [
-        { field: 'id', headerName: 'ID', width: 70 },
         { field: 'lastName', headerName: 'Имя', width: 130 },
         {
             field: 'phoneNumber',

@@ -1,12 +1,12 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { Text } from '@components'
 import { Styled } from './styled'
 import { theme } from '@theme'
+import _ from 'lodash'
 
 type TCameraViewProps = {
     links?: {
         id: number
-        title?: string
         link?: string
         boxAddress?: string
         buttonName?: string
@@ -14,17 +14,32 @@ type TCameraViewProps = {
 }
 
 export const CameraView: FC<TCameraViewProps> = ({ links }) => {
-    const [box, setBox] = useState<number>(1)
+    const [data, setData] = useState<any[] | undefined>(undefined)
     const address = links?.map(({ boxAddress }) => boxAddress)
     const uniqueBox = [...new Set(address)]
-    const [addressBoxes, setSetAddressBoxes] = useState<string | undefined>(uniqueBox && uniqueBox[0])
+    const [addressBoxes, setSetAddressBoxes] = useState<string | undefined>(data && data[0])
+    const filterLinks = links?.filter(({ boxAddress }) => boxAddress === address)
+    const firstElement = filterLinks && filterLinks[0]?.id
+    const [box, setBox] = useState<number | undefined>(firstElement || 4)
+    const result = links?.filter(({ boxAddress }) => boxAddress === addressBoxes)
+    const sortLinks = _.sortBy(result, ['id'])
+
+    console.log(box)
 
     const handleBoxAddress = (address: string | undefined) => {
-        const filterLinks = links?.filter(({ boxAddress }) => boxAddress === address)
-        const firstElement = filterLinks && filterLinks[0].id
-        setBox(firstElement || 1)
+        setBox(firstElement)
         setSetAddressBoxes(address)
     }
+
+    useEffect(() => {
+        setData(uniqueBox)
+        setSetAddressBoxes(uniqueBox[0])
+        console.log(uniqueBox[0])
+    }, [links])
+
+    useEffect(() => {
+        setBox(sortLinks[0]?.id)
+    }, [addressBoxes])
 
     return (
         <Styled.WrapperCameraView>
@@ -43,20 +58,18 @@ export const CameraView: FC<TCameraViewProps> = ({ links }) => {
                 ))}
             </Styled.AddressWrapper>
             <Styled.BoxWrapper>
-                {links
-                    ?.filter(({ boxAddress }) => boxAddress === addressBoxes)
-                    .map(({ id, buttonName }, index) => (
-                        <Styled.CustomButton
-                            key={id}
-                            bgcolor={box === id ? theme.colors.red.step0 : '#1F1F1F'}
-                            onClick={() => setBox(id)}
-                        >
-                            {buttonName ?? `Бокс ${index + 1}`}
-                        </Styled.CustomButton>
-                    ))}
+                {sortLinks.map(({ id, buttonName }) => (
+                    <Styled.CustomButton
+                        key={id}
+                        bgcolor={box === id ? theme.colors.red.step0 : '#1F1F1F'}
+                        onClick={() => setBox(id)}
+                    >
+                        {buttonName}
+                    </Styled.CustomButton>
+                ))}
             </Styled.BoxWrapper>
             <Styled.WrapperLoader>
-                {links
+                {sortLinks
                     ?.filter(({ id, boxAddress }) => id === box && boxAddress === addressBoxes)
                     .map(({ link, id }) => {
                         return (

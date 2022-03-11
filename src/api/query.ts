@@ -15,6 +15,7 @@ export const getGlobalInfo = () => axios.get('https://dev.avksrv.ru/global')
 export const getPhones = () => axios.get('https://dev.avksrv.ru/callphones')
 export const getStocks = () => axios.get('https://dev.avksrv.ru/all-stocks/')
 export const getCardsBlocks = () => axios.get('https://dev.avksrv.ru/cards-blocks/')
+export const getCameraBlocks = () => axios.get('https://dev.avksrv.ru/camera-services/')
 export const putPhones = (id: string | number, data: any) => axios.put(`https://dev.avksrv.ru/callphones/${id}`, data)
 
 // export const queryAPI = (

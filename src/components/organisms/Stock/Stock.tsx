@@ -14,9 +14,8 @@ type TStockProps = {
 export const Stock: FC<TStockProps> = ({ imgLink, description, percent, alt }) => {
     return (
         <>
-            <Styled.WrapperStock>
+            <Styled.WrapperStock $percent={!!percent}>
                 <DesktopWrapper>
-                    {' '}
                     <img src={imgLink} width={200} height={105} alt={alt} />
                 </DesktopWrapper>
                 <Text
@@ -30,20 +29,22 @@ export const Stock: FC<TStockProps> = ({ imgLink, description, percent, alt }) =
                 >
                     {description}
                 </Text>
-                <Text
-                    color={theme.colors.red.step0}
-                    size={92}
-                    sizeMob={92}
-                    fontWeight={900}
-                    style={{
-                        textShadow:
-                            '2px 0 0 #fff, -2px 0 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 1px 1px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff',
-                        letterSpacing: '-5px',
-                        justifySelf: 'center',
-                    }}
-                >
-                    {percent && percent + '%'}
-                </Text>
+                {percent && (
+                    <Text
+                        color={theme.colors.red.step0}
+                        size={92}
+                        sizeMob={92}
+                        fontWeight={900}
+                        style={{
+                            textShadow:
+                                '2px 0 0 #fff, -2px 0 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 1px 1px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff',
+                            letterSpacing: '-5px',
+                            justifySelf: 'center',
+                        }}
+                    >
+                        {percent && percent + '%'}
+                    </Text>
+                )}
             </Styled.WrapperStock>
             <Styled.WrapperSpacing>
                 <Link href="/stock" passHref>
