@@ -3,12 +3,13 @@ import { Banner, CameraView, Cards, LayoutPage, Stock } from '@components'
 import Head from 'next/head'
 import Script from 'next/script'
 import { useEffect, useState } from 'react'
-import { getCardsBlocks, getStocks } from '../src/api/query'
+import { getCameraBlocks, getCardsBlocks, getStocks } from '../src/api/query'
 import { orderBy } from 'lodash'
 
 const Home: NextPage = () => {
     const [data, setData] = useState([])
     const [blocks, setBlocks] = useState([])
+    const [cameraData, setCameraData] = useState([])
     useEffect(() => {
         getStocks().then(data => {
             setData(data?.data)
@@ -16,49 +17,11 @@ const Home: NextPage = () => {
         getCardsBlocks().then(data => {
             setBlocks(data?.data)
         })
+        getCameraBlocks().then(data => {
+            setCameraData(data?.data)
+        })
     }, [])
     const filter = orderBy(data, 'priority')
-    const links = [
-        {
-            id: 1,
-            title: 'string',
-            link: 'https://open.ivideon.com/embed/v2/?server=100-5RdSLExDJR0Obng0nX643C&camera=196608&width=&height=&lang=ru',
-            boxAddress: 'ул.Ульяновых, 12',
-        },
-        {
-            id: 2,
-            title: 'string',
-            link: 'https://open.ivideon.com/embed/v2/?server=100-5RdSLExDJR0Obng0nX643C&camera=262144&width=&height=&lang=ru',
-            boxAddress: 'ул.Ульяновых, 12',
-        },
-        {
-            id: 3,
-            title: 'string',
-            link: 'https://open.ivideon.com/embed/v2/?server=100-5RdSLExDJR0Obng0nX643C&camera=131072&width=&height=&lang=ru',
-            boxAddress: 'ул.Ульяновых, 12',
-        },
-        {
-            id: 4,
-            title: 'string',
-            link: 'https://open.ivideon.com/embed/v2/?server=100-ErDn2MEmnEPRnd6IJnHT2b&camera=589824&lang=ru',
-            buttonName: 'Ресепшн',
-            boxAddress: 'ул.43-й армии, 16',
-        },
-        {
-            id: 5,
-            title: 'string',
-            link: 'https://open.ivideon.com/embed/v2/?server=100-ErDn2MEmnEPRnd6IJnHT2b&camera=655360&lang=ru',
-            buttonName: 'Сервис',
-            boxAddress: 'ул.43-й армии, 16',
-        },
-        {
-            id: 6,
-            title: 'string',
-            link: 'https://open.ivideon.com/embed/v2/?server=100-ErDn2MEmnEPRnd6IJnHT2b&camera=458752&lang=ru',
-            buttonName: 'Мойка',
-            boxAddress: 'ул.43-й армии, 16',
-        },
-    ]
     return (
         <>
             <Head>
@@ -77,12 +40,12 @@ const Home: NextPage = () => {
                     {filter && (
                         <Stock
                             description={filter[0]?.title?.toUpperCase()}
-                            imgLink="./track.png"
+                            imgLink={filter[0]?.image?.url}
                             percent={filter[0]?.procent}
                             alt="Все акции"
                         />
                     )}
-                    <CameraView links={links} />
+                    <CameraView links={cameraData} />
                     {blocks && <Cards cards={blocks} />}
                     <div style={{ height: '96px' }} />
                 </div>
@@ -92,11 +55,7 @@ const Home: NextPage = () => {
                 src="https://cdn.envybox.io/widget/cbk.js?wcb_code=730acf1799c871b0c2610a6ea3716681"
                 async={true}
             />
-            <Script
-                strategy="afterInteractive"
-                src="https://open.ivideon.com/embed/v2/embedded.js"
-                async={true}
-            />
+            <Script strategy="afterInteractive" src="https://open.ivideon.com/embed/v2/embedded.js" async={true} />
         </>
     )
 }
