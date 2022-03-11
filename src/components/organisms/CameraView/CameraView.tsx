@@ -55,7 +55,7 @@ export const CameraView: FC<TCameraViewProps> = ({ links }) => {
                 ))}
             </Styled.AddressWrapper>
             <Styled.BoxWrapper>
-                {sortLinks.map(({ id, buttonName }) => (
+                {sortLinks?.map(({ id, buttonName }) => (
                     <Styled.CustomButton
                         key={id}
                         bgcolor={box === id ? theme.colors.red.step0 : '#1F1F1F'}
@@ -68,7 +68,7 @@ export const CameraView: FC<TCameraViewProps> = ({ links }) => {
             <Styled.WrapperLoader>
                 {sortLinks
                     ?.filter(({ id, boxAddress }) => id === box && boxAddress === addressBoxes)
-                    .map(({ link, id }) => {
+                    ?.map(({ link, id }) => {
                         return (
                             <iframe
                                 key={id}

@@ -31,12 +31,11 @@ const Calls: NextPage = () => {
     const [showPassword, setShowPassword] = useState(false)
     const [cookies, setCookie] = useCookies(['avkcall'])
     const [isNew, setNew] = useState(true)
-
     const handleAuth = () =>
         getAuth(login, password)
             .then(data => {
                 setAuth(!!data)
-                setCookie('avkcall', 'true', { maxAge: 3600 })
+                setCookie('avkcall', 'login', { maxAge: 3600 })
             })
             .catch(() => alert('Неверный логин или пароль'))
 
