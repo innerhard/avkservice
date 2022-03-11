@@ -16,7 +16,7 @@ export const Stock: FC<TStockProps> = ({ imgLink, description, percent, alt }) =
         <>
             <Styled.WrapperStock $percent={!!percent}>
                 <DesktopWrapper>
-                    <img src={imgLink} width={200} height={105} alt={alt} />
+                    <img src={'https://dev.avksrv.ru' + imgLink} width={200} height={105} alt={alt} />
                 </DesktopWrapper>
                 <Text
                     color={theme.colors.white.step0}

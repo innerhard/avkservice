@@ -12,7 +12,7 @@ const WrapperStock = styled.div<IProps>`
     border-radius: 20px;
     padding: 16px;
     margin-bottom: 16px;
-
+  
     @media (min-width: ${theme.breakpoint.tabletMd}px) {
         grid-template-columns: ${({ $percent }) => ($percent ? '200px 1fr 1fr' : '200px 1fr')};
         grid-column-gap: 24px;

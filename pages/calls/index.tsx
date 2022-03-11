@@ -23,7 +23,6 @@ import { getAuth, getPhones, putPhones } from '../../src/api/query'
 
 const Calls: NextPage = () => {
     const [play] = useSound('./1.mp3')
-    const operator = 'Operator'
     const [auth, setAuth] = useState(false)
     const [data, setData] = useState<any>([])
     const [isDialog, setDialog] = useState(true)
@@ -52,7 +51,7 @@ const Calls: NextPage = () => {
             getPhones().then(info => {
                 setData(info?.data)
             })
-        }, 15000)
+        }, 30000)
 
         return () => clearInterval(interval)
     }, [])
@@ -70,7 +69,7 @@ const Calls: NextPage = () => {
     }, [filterData])
 
     const columns: GridColDef[] = [
-        { field: 'lastName', headerName: 'Имя', width: 130 },
+        { field: 'lastName', headerName: 'Имя', width: 230},
         {
             field: 'phoneNumber',
             headerName: 'Номер телефона',
@@ -91,7 +90,6 @@ const Calls: NextPage = () => {
                     e?.stopPropagation()
                     const api: GridApi = params.api
                     const thisRow: Record<string, GridCellValue> = {}
-
                     api.getAllColumns()
                         .filter(c => c.field !== '__check__' && !!c)
                         .forEach(c => (thisRow[c.field] = params.getValue(params.id, c.field)))
@@ -104,7 +102,7 @@ const Calls: NextPage = () => {
                                 ...item,
                                 call: true,
                                 dateCall: new Date().toLocaleString(),
-                                operator,
+                                operator: login,
                             }))
                         !item?.call &&
                             item?.id &&
@@ -125,6 +123,7 @@ const Calls: NextPage = () => {
         { field: 'date', headerName: 'Дата поступления заявки', width: 200 },
         { field: 'dateCall', headerName: 'Дата ответа на заявку', width: 200 },
         { field: 'operator', headerName: 'Кто перезвонил', width: 200 },
+        { field: 'id', headerName: 'ID', width: 70 },
     ]
 
     return (
@@ -234,6 +233,6 @@ const WrapperLogin = styled.div`
 const bounceAnimation = keyframes`${pulse}`
 
 const BouncyDiv = styled.div`
-  animation: 3s infinite ${bounceAnimation};
+    animation: 3s infinite ${bounceAnimation};
 `
 export default Calls
