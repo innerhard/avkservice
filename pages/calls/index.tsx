@@ -35,7 +35,7 @@ const Calls: NextPage = () => {
         getAuth(login, password)
             .then(data => {
                 setAuth(!!data)
-                setCookie('avkcall', 'login', { maxAge: 3600 })
+                setCookie('avkcall', 'login', { maxAge: 31536000 })
             })
             .catch(() => alert('Неверный логин или пароль'))
 
