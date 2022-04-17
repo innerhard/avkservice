@@ -9,7 +9,7 @@ const bot = new TelegramApi(token, { polling: true })
 export default function getAllVehicles(req: NextApiRequest, res: NextApiResponse) {
     // res.json({ hello: 'world', method: req.method }
     bot.on('message', (msg: any) => {
-        bot.sendMessage(470920445, `пошел нахуй ${req.body.name}`)
+        bot.sendMessage(470920445, `${req.body.name}`)
     })
     res.status(200).json({result: 'ok'})
 }

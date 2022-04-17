@@ -1,23 +1,25 @@
 import axios from 'axios'
 
-export const getAPI = axios.post('https://dev.avksrv.ru/admin/login', {
-    'email': 'innerhard@gmail.com',
-    'password': 'WhoFuckMe!100505',
+const getPath = () => (process.env.NODE_ENV === 'development' ? 'https://dev.avksrv.ru' : 'https://avksrv.ru')
+export const getAPI = axios.post(getPath() + '/admin/login', {
+    email: 'innerhard@gmail.com',
+    password: 'WhoFuckMe!100505',
 })
 
-export const getAuth = (login: string, password: string) => axios.post('https://dev.avksrv.ru/admin/login', {
-    'email': login,
-    'password': password,
-})
+export const getAuth = (login: string, password: string) =>
+    axios.post(getPath() + '/admin/login', {
+        email: login,
+        password: password,
+    })
 
-export const getCategories = () => axios.get('https://dev.avksrv.ru/category-services')
-export const getGlobalInfo = () => axios.get('https://dev.avksrv.ru/global')
-export const getPhones = () => axios.get('https://dev.avksrv.ru/callphones')
-export const getStocks = () => axios.get('https://dev.avksrv.ru/all-stocks/')
-export const getCardsBlocks = () => axios.get('https://dev.avksrv.ru/cards-blocks/')
-export const getCameraBlocks = () => axios.get('https://dev.avksrv.ru/camera-services/')
-export const getWidgetServices = () => axios.get('https://dev.avksrv.ru/widget-services/')
-export const putPhones = (id: string | number, data: any) => axios.put(`https://dev.avksrv.ru/callphones/${id}`, data)
+export const getCategories = () => axios.get(getPath() + '/category-services')
+export const getGlobalInfo = () => axios.get(getPath() + '/global')
+export const getPhones = () => axios.get(getPath() + '/callphones')
+export const getStocks = () => axios.get(getPath() + '/all-stocks/')
+export const getCardsBlocks = () => axios.get(getPath() + '/cards-blocks/')
+export const getCameraBlocks = () => axios.get(getPath() + '/camera-services/')
+export const getWidgetServices = () => axios.get(getPath() + '/widget-services/')
+export const putPhones = (id: string | number, data: any) => axios.put(getPath() + `/callphones/${id}`, data)
 
 // export const queryAPI = (
 //     link: string,
